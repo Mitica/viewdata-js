@@ -1,0 +1,30 @@
+{
+  "name": "viewdata",
+  "version": "0.0.1",
+  "description": "viewdata module for nodejs",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha -t 8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mitica/viewdata-js.git"
+  },
+  "keywords": [
+    "viewdata",
+    "locals"
+  ],
+  "author": "Dumitru Cantea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mitica/viewdata-js/issues"
+  },
+  "homepage": "https://github.com/Mitica/viewdata-js#readme",
+  "dependencies": {
+    "async": "^1.5.2"
+  },
+  "devDependencies": {
+    "bluebird": "^3.3.5",
+    "mocha": "^2.4.5"
+  }
+}
