@@ -81,16 +81,32 @@ describe('viewdata', function() {
 			});
 	});
 
-	it('should work with unrequired props', function(done) {
+	it('should work with sync props', function(done) {
 		var container = viewdata({
-			noop: function(params, callback) {
-				callback(new Error('Noop'));
+			tag: function(params, callback) {
+				callback(null, { name: params.name });
+			},
+			news: function(params, callback) {
+				callback(null, [{ id: 1, tag: params.tag }]);
 			}
 		});
-		container({ noop: {} })
-			.get(function(error) {
-				assert.ok(error);
-				done();
+		container([{
+				tag: {
+					params: { name: 'cpp' }
+				}
+			}, {
+				news: {
+					params: function(locals) {
+						return {
+							tag: locals.tag
+						};
+					}
+				}
+			}])
+			.get(function(error, locals) {
+				assert.equal('cpp', locals.tag.name);
+				assert.equal('cpp', locals.news[0].tag.name);
+				done(error);
 			});
 	});
 });
