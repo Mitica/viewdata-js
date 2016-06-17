@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var viewdata = require('../lib/viewdata');
+var viewdata = require('../lib');
 var Promise = require('bluebird');
 
 function syncFn(result) {
@@ -25,7 +25,7 @@ function promiseFn(result) {
 	};
 }
 
-describe('viewdata factory', function() {
+describe('viewdata', function() {
 	it('should throw an exception', function() {
 		assert.throws(function() {
 			viewdata();
@@ -37,30 +37,33 @@ describe('viewdata factory', function() {
 		var container = viewdata({
 			one: syncFn(1)
 		});
-		container({ one: true }, {}, function(error, vd) {
-			assert.equal(vd.one, 1);
-			done(error);
-		});
+		container({ one: true })
+			.get(function(error, vd) {
+				assert.equal(vd.one, 1);
+				done(error);
+			});
 	});
 
 	it('should work with async methods', function(done) {
 		var container = viewdata({
 			one: asyncFn(1)
 		});
-		container({ one: true }, {}, function(error, vd) {
-			assert.equal(vd.one, 1);
-			done(error);
-		});
+		container({ one: true })
+			.get(function(error, vd) {
+				assert.equal(vd.one, 1);
+				done(error);
+			});
 	});
 
 	it('should work with Promises', function(done) {
 		var container = viewdata({
 			one: promiseFn(1)
 		});
-		container({ one: true }, {}, function(error, vd) {
-			assert.equal(vd.one, 1);
-			done(error);
-		});
+		container({ one: true })
+			.get(function(error, vd) {
+				assert.equal(vd.one, 1);
+				done(error);
+			});
 	});
 
 	it('should work with Promise, async & sync methods', function(done) {
@@ -69,12 +72,11 @@ describe('viewdata factory', function() {
 			asyncData: asyncFn(2),
 			promiseData: promiseFn(3)
 		});
-		container({ syncData: true, asyncData: true, promiseData: {} }, { init: 100 },
-			function(error, vd) {
+		container({ syncData: true, asyncData: true, promiseData: {} })
+			.get(function(error, vd) {
 				assert.equal(vd.syncData, 1);
 				assert.equal(vd.asyncData, 2);
 				assert.equal(vd.promiseData, 3);
-				assert.equal(vd.init, 100);
 				done(error);
 			});
 	});
