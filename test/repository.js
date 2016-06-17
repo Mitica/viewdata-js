@@ -5,24 +5,26 @@ var assert = require('assert');
 var path = require('path');
 
 describe('repository', function() {
-	it('should load an object', function() {
+	it('should load an object', function(done) {
 		var rep = repository({
 			one: function() {
 				return 1;
-			},
-			two: function() {
-				return 2;
 			}
 		});
 		assert.equal('function', typeof rep.get);
-		assert.equal(1, rep.get('one'));
-		assert.equal(2, rep.get('two'));
+		rep.get('one', {}, function(error, result) {
+			assert.equal(1, result);
+			done(error);
+		});
 	});
 
-	it('should load a file', function() {
+	it('should load a file', function(done) {
 		var rep = repository(path.join(__dirname, '/repository/getName.js'));
 		assert.equal('function', typeof rep.get);
-		assert.equal('name', rep.get('getName'));
+		rep.get('getName', {}, function(error, result) {
+			assert.equal('name', result);
+			done(error);
+		});
 	});
 
 	it('should load files', function() {

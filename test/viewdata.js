@@ -80,4 +80,17 @@ describe('viewdata', function() {
 				done(error);
 			});
 	});
+
+	it('should work with unrequired props', function(done) {
+		var container = viewdata({
+			noop: function(params, callback) {
+				callback(new Error('Noop'));
+			}
+		});
+		container({ noop: {} })
+			.get(function(error) {
+				assert.ok(error);
+				done();
+			});
+	});
 });

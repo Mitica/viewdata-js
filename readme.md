@@ -10,12 +10,12 @@ var repository = require('viewdata')(path.join(__dirname, './repository'));
 
 var viewdata = repository({
   tag: {
-    options: {
+    params: {
       name: 'tag-name'
     }
   },
   news: {
-    options: {
+    params: {
       tag: 'tag-name',
       limit: 10
     }
