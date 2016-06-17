@@ -55,6 +55,18 @@ describe('viewdata', function() {
 			});
 	});
 
+	it('should work with extra locals', function(done) {
+		var container = viewdata({
+			one: asyncFn(1)
+		});
+		container({ one: true })
+			.get({ init: true }, function(error, vd) {
+				assert.equal(vd.one, 1);
+				assert.equal(vd.init, true);
+				done(error);
+			});
+	});
+
 	it('should work with Promises', function(done) {
 		var container = viewdata({
 			one: promiseFn(1)
