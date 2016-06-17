@@ -95,10 +95,10 @@ describe('viewdata', function() {
 
 	it('should work with sync props', function(done) {
 		var container = viewdata({
-			tag: function(params, callback) {
+			tag: function(locals, params, callback) {
 				callback(null, { name: params.name });
 			},
-			news: function(params, callback) {
+			news: function(locals, params, callback) {
 				callback(null, [{ id: 1, tag: params.tag }]);
 			}
 		});

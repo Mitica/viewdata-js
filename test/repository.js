@@ -12,7 +12,7 @@ describe('repository', function() {
 			}
 		});
 		assert.equal('function', typeof rep.get);
-		rep.get('one', {}, function(error, result) {
+		rep.get('one', {}, null, function(error, result) {
 			assert.equal(1, result);
 			done(error);
 		});
@@ -21,7 +21,7 @@ describe('repository', function() {
 	it('should load a file', function(done) {
 		var rep = repository(path.join(__dirname, '/repository/getName.js'));
 		assert.equal('function', typeof rep.get);
-		rep.get('getName', {}, function(error, result) {
+		rep.get('getName', {}, null, function(error, result) {
 			assert.equal('name', result);
 			done(error);
 		});
