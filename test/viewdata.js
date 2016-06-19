@@ -121,4 +121,39 @@ describe('viewdata', function() {
 				done(error);
 			});
 	});
+
+	it('should change order', function(done) {
+		var container = viewdata({
+			tag: function(locals, params, callback) {
+				callback(null, { name: params.name });
+			},
+			news: function(locals, params, callback) {
+				callback(null, [{ id: 1, tag: params.tag }]);
+			}
+		});
+		container([{
+				tag: {
+					params: { name: 'cpp' }
+				}
+			}, {
+				news: {
+					params: function(locals) {
+						return {
+							tag: locals.tag2
+						};
+					}
+				}
+			}, {
+				tag2: {
+					source: 'tag',
+					params: { name: 'nodejs' }
+				}
+			}])
+			.change(0, 2)
+			.get(function(error, locals) {
+				assert.equal('cpp', locals.tag.name);
+				assert.equal('nodejs', locals.news[0].tag.name);
+				done(error);
+			});
+	});
 });
